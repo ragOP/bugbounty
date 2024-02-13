@@ -1,4 +1,4 @@
-import NavBar from "./NavBar";
+import NavBar from "../layout/NavBar";
 
 function AboutPage() {
   return (

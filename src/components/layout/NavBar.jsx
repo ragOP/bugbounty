@@ -1,4 +1,4 @@
-import logo from "../assests/logo.png";
+import logo from "../../assests/logo.png";
 
 function NavBar() {
   return (
