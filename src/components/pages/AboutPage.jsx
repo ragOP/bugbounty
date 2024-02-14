@@ -1,3 +1,4 @@
+import Footer from "../layout/Footer";
 import NavBar from "../layout/NavBar";
 
 function AboutPage() {
@@ -91,6 +92,7 @@ function AboutPage() {
           tone, and goals of your technology blog website.
         </p>
       </div>
+      <Footer />
     </div>
   );
 }
