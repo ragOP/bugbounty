@@ -12,8 +12,8 @@ function NavBar() {
             placeholder="Search"
             aria-label="Search"
           />
-          <button className="btn btn-outline-success" type="submit">
-            Search
+          <button className="btn btn-success" type="submit">
+            <i className="bi bi-search"></i>
           </button>
         </form>
         <div className="" id="navbarSupportedContent">

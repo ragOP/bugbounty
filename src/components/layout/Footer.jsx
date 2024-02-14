@@ -39,22 +39,22 @@ function Footer() {
             <h5>Connect with Us</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="#" className="text-dark ">
+                <a href="#" className="text-dark text-decoration-none">
                   <i className="bi bi-facebook"></i> Facebook
                 </a>
               </li>
               <li>
-                <a href="#" className="text-dark ">
+                <a href="#" className="text-dark text-decoration-none">
                   <i className="bi bi-twitter"></i> Twitter
                 </a>
               </li>
               <li>
-                <a href="#" className="text-dark ">
+                <a href="#" className="text-dark text-decoration-none">
                   <i className="bi bi-instagram"></i> Instagram
                 </a>
               </li>
               <li>
-                <a href="#" className="text-dark ">
+                <a href="#" className="text-dark text-decoration-none">
                   <i className="bi bi-linkedin"></i> LinkedIn
                 </a>
               </li>

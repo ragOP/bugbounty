@@ -168,10 +168,10 @@ function Cards() {
           <div className="card-body">
             <h5 className="card-title">{blogPost.title}</h5>
             <p className="card-text">{blogPost.content}</p>
-            <span className="badge bg-primary my-2 me-2">
+            <span className="badge bg-primary my-2 me-1">
               {blogPost.category}
             </span>
-            <span className="badge bg-primary my-2 me-2">
+            <span className="badge bg-primary my-2 me-1">
               Total Views - {blogPost.totalViews}
             </span>
             <span className="badge bg-primary my-2">{blogPost.readTime}</span>

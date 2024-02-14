@@ -13,11 +13,11 @@ const badgeItems = [
 
 function Badegs() {
   return (
-    <div className="my-3 d-flex align-items-center justify-content-center">
+    <div className="my-3 d-flex align-items-center justify-content-center flex-wrap">
       {badgeItems.map((badgeItem) => (
         <span
           key={badgeItem.id}
-          className="badge bg-primary mx-1"
+          className="badge bg-primary mx-1 my-2"
           style={{ cursor: "pointer" }}
         >
           {badgeItem.name}
