@@ -53,6 +53,11 @@ function NavBar() {
                   </Link>
                 </li>
                 <li>
+                  <Link className="dropdown-item" to="/postblog">
+                    Post Blog
+                  </Link>
+                </li>
+                <li>
                   <Link className="dropdown-item" to="/user/blogs">
                     My Blogs
                   </Link>
