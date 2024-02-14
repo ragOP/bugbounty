@@ -1,10 +1,13 @@
 import logo from "../../assests/logo.png";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid d-flex align-items-center justify-content-around">
-        <img className="navbar-brand" src={logo} style={{ width: "140px" }} />
+        <Link to="/">
+          <img className="navbar-brand" src={logo} style={{ width: "140px" }} />
+        </Link>
         <form className="d-flex">
           <input
             className="form-control me-2"
@@ -19,46 +22,45 @@ function NavBar() {
         <div className="" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <Link className="nav-link" aria-current="page" to="/">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/about">
                 About
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/contact">
                 Contact
-              </a>
+              </Link>
             </li>
             <li className="nav-item dropdown">
-              <a
+              <p
                 className="nav-link dropdown-toggle"
-                href="#"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Farish Jamal
-              </a>
+              </p>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" to="/user/profile">
                     Profile
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" to="/user/blogs">
                     My Blogs
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" to="/logout">
                     Logout
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </li>

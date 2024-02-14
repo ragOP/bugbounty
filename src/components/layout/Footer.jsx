@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="bg-light text-dark py-4 shadow-lg p-3 mt-5 bg-white rounded">
@@ -14,24 +16,24 @@ function Footer() {
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="#" className="text-dark text-decoration-none">
+                <Link to="/" className="text-dark text-decoration-none">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-dark text-decoration-none">
+                <Link to="/about" className="text-dark text-decoration-none">
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-dark text-decoration-none">
-                  Blog
-                </a>
+                <Link to="/" className="text-dark text-decoration-none">
+                  All Blog
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-dark text-decoration-none">
+                <Link to="/contact" className="text-dark text-decoration-none">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -39,24 +41,24 @@ function Footer() {
             <h5>Connect with Us</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="#" className="text-dark text-decoration-none">
+                <Link to="#" className="text-dark text-decoration-none">
                   <i className="bi bi-facebook"></i> Facebook
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-dark text-decoration-none">
+                <Link to="#" className="text-dark text-decoration-none">
                   <i className="bi bi-twitter"></i> Twitter
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-dark text-decoration-none">
+                <Link to="#" className="text-dark text-decoration-none">
                   <i className="bi bi-instagram"></i> Instagram
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-dark text-decoration-none">
+                <Link to="#" className="text-dark text-decoration-none">
                   <i className="bi bi-linkedin"></i> LinkedIn
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
