@@ -1,7 +1,14 @@
 import logo from "../../assests/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-function NavBar() {
+function NavBar({ user }) {
+  const navigateTo = useNavigate();
+  function logoutUser() {
+    localStorage.removeItem("accessToken");
+    navigateTo("/");
+    window.location.reload();
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid d-flex align-items-center justify-content-around">
@@ -36,44 +43,63 @@ function NavBar() {
                 Contact
               </Link>
             </li>
-            <li className="nav-item dropdown">
-              <p
-                className="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Farish Jamal
-              </p>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <Link className="dropdown-item" to="/user/profile">
-                    Profile
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/postblog">
-                    Post Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/user/blogs">
-                    My Blogs
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/logout">
-                    Logout
-                  </Link>
-                </li>
-              </ul>
-            </li>
+            {user ? (
+              <li className="nav-item dropdown">
+                <p
+                  className="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {user.username}
+                </p>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <Link className="dropdown-item" to="/user/profile">
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/postblog">
+                      Post Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/user/blogs">
+                      My Blogs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" onClick={logoutUser}>
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/user/login">
+                  Login
+                </Link>
+              </li>
+            )}
+            {!user && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/user/register">
+                  Register
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
     </nav>
   );
 }
+
+NavBar.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 
 export default NavBar;

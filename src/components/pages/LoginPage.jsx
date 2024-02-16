@@ -18,7 +18,8 @@ function LoginPage() {
         email,
         password,
       });
-      console.log({ user });
+      const accessToken = user.data.sessionId;
+      localStorage.setItem("accessToken", accessToken);
       navigateTo("/");
     } catch (error) {
       console.log("Error occurred during registration:", error);
