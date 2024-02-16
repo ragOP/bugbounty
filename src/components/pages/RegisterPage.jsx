@@ -16,12 +16,13 @@ function RegisterPage() {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:3001/user/register", {
+      const user = await axios.post("http://localhost:3001/user/register", {
         username,
         email,
         password,
         description,
       });
+      console.log({ user });
       navigateTo("/");
     } catch (error) {
       console.error("Error occurred during registration:", error);
