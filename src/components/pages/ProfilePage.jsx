@@ -1,26 +1,50 @@
+import { useEffect, useState } from "react";
 import UpdateUserModal from "../common/UpdateUserModal";
 import Footer from "../layout/Footer";
 import NavBar from "../layout/NavBar";
+import getUserFromJwt from "../../helper/getAccessToken";
 
 function ProfilePage() {
+  const [user, setUser] = useState(null);
+  const accessToken = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUserFromJwt(accessToken);
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    if (accessToken) fetchUser();
+  }, [accessToken]);
+
+  if (!user) {
+    return (
+      <>
+        <NavBar user={null} />
+        <div className="d-flex align-items-center justify-content-center h-100 my-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
   return (
     <>
-      <NavBar />
+      <NavBar user={user} />
       <div className="container my-4 d-flex align-items-center justify-content-center flex-column">
         <img
-          src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
-          className="rounded"
+          src={`http://localhost:3001/${user.profilePicture}`}
           alt="user-profile"
-          style={{ width: "150px" }}
+          style={{ width: "150px", borderRadius: "50%" }}
         />
-        <h4 className="my-2">Farish Jamal</h4>
-        <h6 className="my-2">farishjamal98@gmail.com</h6>
-        <p className="my-2 text-center w-50">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-          sequi dicta commodi cum eveniet maxime in magnam. Reiciendis
-          temporibus, libero vel laboriosam sint porro dicta optio sunt eum esse
-          soluta?
-        </p>
+        <h4 className="my-2">{user.username}</h4>
+        <h6 className="my-2">{user.email}</h6>
+        <p className="my-2 text-center w-50">{user.description}</p>
         <UpdateUserModal />
       </div>
       <Footer />
