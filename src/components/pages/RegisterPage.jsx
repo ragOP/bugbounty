@@ -9,6 +9,7 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [description, setDescription] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
 
   const navigateTo = useNavigate();
 
@@ -16,12 +17,21 @@ function RegisterPage() {
     e.preventDefault();
 
     try {
-      const user = await axios.post("http://localhost:3001/user/register", {
-        username,
-        email,
-        password,
-        description,
-      });
+      const user = await axios.post(
+        "http://localhost:3001/user/register",
+        {
+          username,
+          email,
+          password,
+          description,
+          profilePicture,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       const accessToken = user.data.sessionId;
       localStorage.setItem("accessToken", accessToken);
       navigateTo("/");
@@ -79,6 +89,14 @@ function RegisterPage() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Profile Picture</label>
+            <input
+              className="form-control"
+              type="file"
+              onChange={(e) => setProfilePicture(e.target.files[0])}
+            />
           </div>
           <button type="submit" className="btn btn-success w-100">
             Register
