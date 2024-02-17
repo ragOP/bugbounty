@@ -48,7 +48,7 @@ function NavBar({ user }) {
                 <img
                   src={`http://localhost:3001/${user.profilePicture}`}
                   alt="profile"
-                  style={{ width: "25px", borderRadius: "50%" }}
+                  style={{ width: "25px", borderRadius: "50%", height: "25px" }}
                   className="mb-3"
                 />
                 <p

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 function HomePage() {
   const [user, setUser] = useState(null);
+
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -22,26 +23,15 @@ function HomePage() {
     if (accessToken) fetchUser();
   }, [accessToken]);
 
-  if (!user) {
-    return (
-      <>
-        <NavBar user={null} />
-        <div className="d-flex align-items-center justify-content-center h-100 my-5">
-          <div className="spinner-border text-primary" role="status">
-            <span className="sr-only"></span>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
   return (
     <div>
-      <NavBar user={user} />
-      <Badegs />
-      <Cards />
-      <Pagination />
-      <Footer />
+      <>
+        <NavBar user={user} />
+        <Badegs />
+        <Cards />
+        <Pagination />
+        <Footer />
+      </>
     </div>
   );
 }

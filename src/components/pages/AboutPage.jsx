@@ -1,10 +1,28 @@
+import { useEffect, useState } from "react";
 import Footer from "../layout/Footer";
 import NavBar from "../layout/NavBar";
+import getUserFromJwt from "../../helper/getAccessToken";
 
 function AboutPage() {
+  const [user, setUser] = useState(null);
+
+  const accessToken = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUserFromJwt(accessToken);
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    if (accessToken) fetchUser();
+  }, [accessToken]);
+
   return (
     <div>
-      <NavBar />
+      <NavBar user={user} />
       <div className="container py-4">
         <h2>
           <b>Welcome to Quill Quest: Your Tech Exploration Hub</b>

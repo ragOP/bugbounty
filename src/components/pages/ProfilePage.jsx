@@ -6,6 +6,7 @@ import getUserFromJwt from "../../helper/getAccessToken";
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
+
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -24,7 +25,10 @@ function ProfilePage() {
     return (
       <>
         <NavBar user={null} />
-        <div className="d-flex align-items-center justify-content-center h-100 my-5">
+        <div
+          className="d-flex align-items-center justify-content-center my-5"
+          style={{ height: "100vh" }}
+        >
           <div className="spinner-border text-primary" role="status">
             <span className="sr-only"></span>
           </div>
@@ -40,12 +44,12 @@ function ProfilePage() {
         <img
           src={`http://localhost:3001/${user.profilePicture}`}
           alt="user-profile"
-          style={{ width: "150px", borderRadius: "50%" }}
+          style={{ width: "150px", borderRadius: "50%", height: "150px" }}
         />
         <h4 className="my-2">{user.username}</h4>
         <h6 className="my-2">{user.email}</h6>
         <p className="my-2 text-center w-50">{user.description}</p>
-        <UpdateUserModal />
+        <UpdateUserModal user={user} />
       </div>
       <Footer />
     </>

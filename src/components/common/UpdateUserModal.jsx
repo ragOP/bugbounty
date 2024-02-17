@@ -1,4 +1,5 @@
-function UpdateUserModal() {
+import PropTypes from "prop-types";
+function UpdateUserModal({ user }) {
   return (
     <div>
       <button
@@ -32,12 +33,13 @@ function UpdateUserModal() {
             <div className="modal-body">
               <form>
                 <div className="mb-3">
-                  <label className="form-label">User Name</label>
+                  <label className="form-label"></label>
                   <input
                     type="text"
                     className="form-control"
                     placeholder="John Doe"
                     name="username"
+                    value={user.username}
                   />
                 </div>
                 <div className="mb-3">
@@ -47,6 +49,7 @@ function UpdateUserModal() {
                     className="form-control"
                     placeholder="name@example.com"
                     name="email"
+                    value={user.email}
                   />
                 </div>
                 <div className="mb-3">
@@ -55,6 +58,7 @@ function UpdateUserModal() {
                     className="form-control"
                     name="description"
                     rows="2"
+                    value={user.description}
                   ></textarea>
                 </div>
                 <div className="input-group my-3">
@@ -73,5 +77,13 @@ function UpdateUserModal() {
     </div>
   );
 }
+
+UpdateUserModal.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default UpdateUserModal;
