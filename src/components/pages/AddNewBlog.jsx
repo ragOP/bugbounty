@@ -33,7 +33,7 @@ function AddNewBlog() {
           },
         }
       );
-      navigateTo("/");
+      navigateTo(`/blog/${blog.data._id}`);
       console.log(blog);
     } catch (error) {
       console.error("Error occurred during creating new blog:", error);
