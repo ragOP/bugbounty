@@ -8,6 +8,7 @@ import formatDate from "../../helper/parseDate";
 import getAuthor from "../../helper/getspecificUser";
 import CommentBox from "./CommentBox";
 import Comments from "./Comments";
+import UpdateBlogModal from "./UpdateBlogModal";
 
 function FullBlog() {
   const [blog, setBlog] = useState({});
@@ -48,6 +49,7 @@ function FullBlog() {
   }, [id, accessToken, blog.author]);
   return (
     <div>
+      <UpdateBlogModal />
       <NavBar user={user} />
       <div className="container d-flex justify-content-center flex-column">
         <h1 className="mt-4 text-center">{blog.title}</h1>
@@ -90,7 +92,15 @@ function FullBlog() {
           style={{ width: "100%", height: "300px" }}
         />
         <div className="mt-4">
-          <button className="btn btn-primary me-3 btn-sm">Edit</button>
+          <button
+            type="button"
+            className="btn btn-primary btn-sm me-2"
+            data-bs-toggle="modal"
+            data-bs-target="#editBlogModal"
+          >
+            Edit
+          </button>
+
           <button className="btn btn-danger btn-sm">Delete</button>
         </div>
         <p className="my-4" style={{ lineHeight: "34px" }}>
