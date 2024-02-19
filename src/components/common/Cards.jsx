@@ -1,5 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import formatDate from "../../helper/parseDate";
+import getAuthor from "../../helper/getspecificUser";
 
 function Cards({
   bannerImage,
@@ -12,28 +15,17 @@ function Cards({
   createdAt,
   author,
 }) {
-  const [specificUser, setSpecificUser] = useState([]);
+  const [specificUser, setSpecificUser] = useState("");
 
   useEffect(() => {
-    const getAuthor = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/user/${author}`
-        );
-        setSpecificUser(response.data);
-      } catch (error) {
-        console.error("Error occurred during fetching author:", error);
+    const fetchSpecificUser = async () => {
+      if (author) {
+        const authorData = await getAuthor(author);
+        setSpecificUser(authorData);
       }
     };
-    if (author) {
-      getAuthor();
-    }
+    fetchSpecificUser();
   }, [author]);
-
-  const formatDate = (timestamp) => {
-    const date = new Date(parseInt(timestamp));
-    return date.toLocaleString();
-  };
 
   return (
     <div className="card mx-3 my-4" style={{ width: "23rem" }} key={_id}>
@@ -55,13 +47,13 @@ function Cards({
         <span className="badge bg-primary my-2 me-1">
           Total Views - {totalViews}
         </span>
-        <span className="badge bg-primary my-2">{readTime}</span>
+        <span className="badge bg-primary my-2">{readTime} min</span>
         <span className="badge bg-success my-2 w-100">
           Created By - {specificUser} on {formatDate(createdAt)}
         </span>
-        <a href="#" className="btn btn-primary btn-sm w-100">
+        <Link to={`/blog/${_id}`} className="btn btn-primary btn-sm w-100">
           Read Full Blog
-        </a>
+        </Link>
       </div>
     </div>
   );

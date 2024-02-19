@@ -7,6 +7,7 @@ import BlogPage from "./components/common/BlogPage";
 import LoginPage from "./components/pages/LoginPage";
 import RegisterPage from "./components/pages/RegisterPage";
 import AddNewBlog from "./components/pages/AddNewBlog";
+import FullBlog from "./components/common/FullBlog";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/user/login" element={<LoginPage />} />
         <Route path="/user/register" element={<RegisterPage />} />
         <Route path="/postblog" element={<AddNewBlog />} />
+        <Route path="/blog/:id" element={<FullBlog />} />
       </Routes>
     </BrowserRouter>
   );
