@@ -6,6 +6,8 @@ import getUserFromJwt from "../../helper/getAccessToken";
 import Footer from "../layout/Footer";
 import formatDate from "../../helper/parseDate";
 import getAuthor from "../../helper/getspecificUser";
+import CommentBox from "./CommentBox";
+import Comments from "./Comments";
 
 function FullBlog() {
   const [blog, setBlog] = useState({});
@@ -47,10 +49,10 @@ function FullBlog() {
   return (
     <div>
       <NavBar user={user} />
-      <div className="container d-flex align-items-center justify-content-center flex-column">
+      <div className="container d-flex justify-content-center flex-column">
         <h1 className="mt-4 text-center">{blog.title}</h1>
 
-        <div className="mb-3">
+        <div className="mb-3 text-center">
           <span
             className="badge bg-primary mx-1 my-2"
             style={{ cursor: "pointer" }}
@@ -94,6 +96,8 @@ function FullBlog() {
         <p className="my-4" style={{ lineHeight: "34px" }}>
           {blog.content}
         </p>
+        {user ? <CommentBox /> : ""}
+        <Comments />
       </div>
       <Footer />
     </div>
