@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../layout/NavBar";
 import getUserFromJwt from "../../helper/getAccessToken";
 import Footer from "../layout/Footer";
@@ -16,7 +16,17 @@ function FullBlog() {
   const [specificUser, setSpecificUser] = useState("");
 
   const { id } = useParams();
+  const navigateTo = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
+
+  const handleDelteBlog = async () => {
+    try {
+      await axios.get(`http://localhost:3001/blog/delete/${id}`);
+      navigateTo("/");
+    } catch (error) {
+      console.error("Error fetching specific blog:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -108,7 +118,9 @@ function FullBlog() {
               Edit
             </button>
 
-            <button className="btn btn-danger btn-sm">Delete</button>
+            <button className="btn btn-danger btn-sm" onClick={handleDelteBlog}>
+              Delete
+            </button>
           </div>
         ) : (
           ""

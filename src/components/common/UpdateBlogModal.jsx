@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 function UpdateBlogModal({ blog }) {
   const [data, setData] = useState({
     title: "",
@@ -8,8 +7,6 @@ function UpdateBlogModal({ blog }) {
     content: "",
     bannerImage: null,
   });
-
-  const navigateTo = useNavigate();
 
   useEffect(() => {
     if (blog) {
