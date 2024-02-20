@@ -43,13 +43,18 @@ function FullBlog() {
         setSpecificUser(authorData);
       }
     };
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
     if (accessToken) fetchUser();
     getSpecificBlog();
     fetchSpecificUser();
   }, [id, accessToken, blog.author]);
   return (
     <div>
-      <UpdateBlogModal />
+      <UpdateBlogModal blog={blog} />
       <NavBar user={user} />
       <div className="container d-flex justify-content-center flex-column">
         <h1 className="mt-4 text-center">{blog.title}</h1>
@@ -89,7 +94,7 @@ function FullBlog() {
         <img
           src={`http://localhost:3001/${blog.bannerImage}`}
           alt="thumbnail image"
-          style={{ width: "100%", height: "300px" }}
+          style={{ width: "100%", height: "300px", objectFit: "cover" }}
         />
         <div className="mt-4">
           <button

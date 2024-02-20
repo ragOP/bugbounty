@@ -1,4 +1,47 @@
-function UpdateBlogModal() {
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+function UpdateBlogModal({ blog }) {
+  const [data, setData] = useState({
+    title: "",
+    category: "",
+    content: "",
+    bannerImage: null,
+  });
+
+  const navigateTo = useNavigate();
+
+  useEffect(() => {
+    if (blog) {
+      setData({
+        title: blog.title,
+        category: blog.category,
+        content: blog.content,
+      });
+    }
+  }, [blog]);
+
+  const handleUpdateblog = async (e) => {
+    e.preventDefault();
+    try {
+      const id = blog._id;
+      const result = await axios.post(
+        `http://localhost:3001/blog/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setData(result);
+      window.location.reload();
+      window.re;
+    } catch (error) {
+      console.error("Error occurred during registration:", error);
+    }
+  };
+  console.log(blog);
   return (
     <div
       className="modal fade"
@@ -20,15 +63,26 @@ function UpdateBlogModal() {
             ></button>
           </div>
           <div className="modal-body">
-            <form>
+            <form onSubmit={handleUpdateblog}>
               <div className="mb-3">
                 <label className="form-label">Title</label>
-                <input type="text" className="form-control" name="username" />
+                <input
+                  type="text"
+                  className="form-control"
+                  name="username"
+                  value={data.title}
+                  onChange={(e) => setData({ ...data, title: e.target.value })}
+                />
               </div>
               <div className="mb-3">
                 <label className="form-label">Update Category</label>
-                <select className="form-select">
-                  <option value="">Select category</option>
+                <select
+                  className="form-select"
+                  onChange={(e) =>
+                    setData({ ...data, category: e.target.value })
+                  }
+                >
+                  <option value="">{data.category}</option>
                   <option value="Tech Updates">Tech Updates</option>
                   <option value="React Js">React Js</option>
                   <option value="JavaScript">JavaScript</option>
@@ -47,6 +101,10 @@ function UpdateBlogModal() {
                   className="form-control"
                   name="description"
                   rows="3"
+                  value={data.content}
+                  onChange={(e) =>
+                    setData({ ...data, content: e.target.value })
+                  }
                 ></textarea>
               </div>
               <div className="input-group my-3">
@@ -54,9 +112,14 @@ function UpdateBlogModal() {
                   type="file"
                   className="form-control"
                   name="bannerImage"
+                  onChange={(e) =>
+                    setData({ ...data, bannerImage: e.target.files[0] })
+                  }
                 />
               </div>
-              <button className="btn btn-success w-100">Submit</button>
+              <button className="btn btn-success w-100" type="submit">
+                Submit
+              </button>
             </form>
           </div>
         </div>
