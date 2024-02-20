@@ -41,7 +41,6 @@ function UpdateBlogModal({ blog }) {
       console.error("Error occurred during registration:", error);
     }
   };
-  console.log(blog);
   return (
     <div
       className="modal fade"

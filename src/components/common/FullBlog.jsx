@@ -52,6 +52,7 @@ function FullBlog() {
     getSpecificBlog();
     fetchSpecificUser();
   }, [id, accessToken, blog.author]);
+  console.log(specificUser, user);
   return (
     <div>
       <UpdateBlogModal blog={blog} />
@@ -96,18 +97,22 @@ function FullBlog() {
           alt="thumbnail image"
           style={{ width: "100%", height: "300px", objectFit: "cover" }}
         />
-        <div className="mt-4">
-          <button
-            type="button"
-            className="btn btn-primary btn-sm me-2"
-            data-bs-toggle="modal"
-            data-bs-target="#editBlogModal"
-          >
-            Edit
-          </button>
+        {user && specificUser === user.username ? (
+          <div className="mt-4">
+            <button
+              type="button"
+              className="btn btn-primary btn-sm me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#editBlogModal"
+            >
+              Edit
+            </button>
 
-          <button className="btn btn-danger btn-sm">Delete</button>
-        </div>
+            <button className="btn btn-danger btn-sm">Delete</button>
+          </div>
+        ) : (
+          ""
+        )}
         <p className="my-4" style={{ lineHeight: "34px" }}>
           {blog.content}
         </p>
