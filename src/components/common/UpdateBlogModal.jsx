@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import JoditEditor from "jodit-react";
 function UpdateBlogModal({ blog }) {
+  const editor = useRef(null);
   const [data, setData] = useState({
     title: "",
     category: "",
@@ -93,15 +95,20 @@ function UpdateBlogModal({ blog }) {
               </div>
               <div className="mb-3">
                 <label className="form-label">Update Blog</label>
-                <textarea
-                  className="form-control"
-                  name="description"
-                  rows="3"
+                <JoditEditor
+                  ref={editor}
+                  tabIndex={1}
                   value={data.content}
-                  onChange={(e) =>
-                    setData({ ...data, content: e.target.value })
+                  onBlur={() => {
+                    if (editor.current) {
+                      const newContent = editor.current.editor.value;
+                      setData({ ...data, content: newContent });
+                    }
+                  }}
+                  onChange={(newContent) =>
+                    setData({ ...data, content: newContent })
                   }
-                ></textarea>
+                />
               </div>
               <div className="input-group my-3">
                 <input

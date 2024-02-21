@@ -62,7 +62,6 @@ function FullBlog() {
     getSpecificBlog();
     fetchSpecificUser();
   }, [id, accessToken, blog.author]);
-  console.log(specificUser, user);
   return (
     <div>
       <UpdateBlogModal blog={blog} />
