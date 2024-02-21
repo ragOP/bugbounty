@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Footer from "../layout/Footer";
 import NavBar from "../layout/NavBar";
 import getUserFromJwt from "../../helper/getAccessToken";
 import axios from "axios";
+import JoditEditor from "jodit-react";
 import { useNavigate } from "react-router-dom";
 
 function AddNewBlog() {
@@ -12,11 +13,14 @@ function AddNewBlog() {
   const [bannerImage, setBannerImage] = useState(null);
   const [category, setCategory] = useState("");
 
+  const editor = useRef(null);
+
   const accessToken = localStorage.getItem("accessToken");
   const navigateTo = useNavigate();
 
   const handleCreateNewBlog = async (e) => {
     e.preventDefault();
+    console.log("Description: ", description);
     try {
       const blog = await axios.post(
         "http://localhost:3001/blog/create",
@@ -98,13 +102,15 @@ function AddNewBlog() {
           </div>
           <div className="mb-3">
             <label className="form-label">Write Blog</label>
-            <textarea
-              className="form-control"
-              name="content"
-              rows="5"
+            <JoditEditor
+              ref={editor}
+              tabIndex={1}
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
+              onBlur={(newContent) => setDescription(newContent)}
+              onChange={(newContent) => {
+                setDescription(newContent);
+              }}
+            />
           </div>
           <button className="btn btn-success w-100">Post</button>
         </form>

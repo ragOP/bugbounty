@@ -126,7 +126,7 @@ function FullBlog() {
           ""
         )}
         <p className="my-4" style={{ lineHeight: "34px" }}>
-          {blog.content}
+          <div dangerouslySetInnerHTML={{ __html: blog.content }} />
         </p>
         {user ? <CommentBox /> : ""}
         <Comments />

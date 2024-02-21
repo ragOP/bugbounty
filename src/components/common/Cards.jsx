@@ -26,6 +26,15 @@ function Cards({
     fetchSpecificUser();
   }, [author]);
 
+  const renderContent = () => {
+    const words = content.split(" ");
+    if (words.length > 50) {
+      const truncatedContent = words.slice(0, 50).join(" ");
+      return truncatedContent + "...";
+    }
+    return content;
+  };
+
   return (
     <div className="card mx-3 my-4" style={{ width: "23rem" }} key={_id}>
       <img
@@ -36,12 +45,7 @@ function Cards({
       />
       <div className="card-body">
         <h5 className="card-title">{title}</h5>
-        <p className="card-text">
-          {" "}
-          {content.split(" ").length > 50
-            ? content.slice(0, 250) + "..."
-            : content}
-        </p>
+        <div dangerouslySetInnerHTML={{ __html: renderContent() }} />
         <span className="badge bg-primary my-2 me-1">{category}</span>
         <span className="badge bg-primary my-2 me-1">
           Total Views - {totalViews}
