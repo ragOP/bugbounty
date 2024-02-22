@@ -27,9 +27,9 @@ function Cards({
   }, [author]);
 
   const renderContent = () => {
-    const words = content.split(" ");
-    if (words.length > 50) {
-      const truncatedContent = words.slice(0, 50).join(" ");
+    const words = content;
+    if (words.length > 250) {
+      const truncatedContent = words.slice(0, 250);
       return truncatedContent + "...";
     }
     return content;

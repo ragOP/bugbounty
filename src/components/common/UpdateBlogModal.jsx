@@ -35,7 +35,6 @@ function UpdateBlogModal({ blog }) {
       );
       setData(result);
       window.location.reload();
-      window.re;
     } catch (error) {
       console.error("Error occurred during registration:", error);
     }

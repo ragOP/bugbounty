@@ -1,5 +1,42 @@
+import axios from "axios";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 function UpdateUserModal({ user }) {
+  const [data, setData] = useState({
+    username: "",
+    email: "",
+    description: "",
+    profilePicture: null,
+  });
+
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axios.post(
+        `http://localhost:3001/user/edit/${user.id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setData(result);
+      console.log(result);
+    } catch (error) {
+      console.error("Error occurred during registration:", error);
+    }
+  };
+  useEffect(() => {
+    if (user) {
+      setData({
+        username: user.username,
+        email: user.email,
+        description: user.description,
+      });
+    }
+  }, [user]);
+
   return (
     <div>
       <button
@@ -31,7 +68,7 @@ function UpdateUserModal({ user }) {
               ></button>
             </div>
             <div className="modal-body">
-              <form>
+              <form onSubmit={handleUpdateUser}>
                 <div className="mb-3">
                   <label className="form-label"></label>
                   <input
@@ -39,7 +76,10 @@ function UpdateUserModal({ user }) {
                     className="form-control"
                     placeholder="John Doe"
                     name="username"
-                    value={user.username}
+                    value={data.username}
+                    onChange={(e) =>
+                      setData({ ...data, username: e.target.value })
+                    }
                   />
                 </div>
                 <div className="mb-3">
@@ -49,7 +89,10 @@ function UpdateUserModal({ user }) {
                     className="form-control"
                     placeholder="name@example.com"
                     name="email"
-                    value={user.email}
+                    value={data.email}
+                    onChange={(e) =>
+                      setData({ ...data, email: e.target.value })
+                    }
                   />
                 </div>
                 <div className="mb-3">
@@ -58,7 +101,10 @@ function UpdateUserModal({ user }) {
                     className="form-control"
                     name="description"
                     rows="2"
-                    value={user.description}
+                    value={data.description}
+                    onChange={(e) =>
+                      setData({ ...data, description: e.target.value })
+                    }
                   ></textarea>
                 </div>
                 <div className="input-group my-3">
@@ -66,9 +112,14 @@ function UpdateUserModal({ user }) {
                     type="file"
                     className="form-control"
                     name="profilePicture"
+                    onChange={(e) =>
+                      setData({ ...data, profilePicture: e.target.files[0] })
+                    }
                   />
                 </div>
-                <button className="btn btn-success w-100">Submit</button>
+                <button className="btn btn-success w-100" type="submit">
+                  Submit
+                </button>
               </form>
             </div>
           </div>
