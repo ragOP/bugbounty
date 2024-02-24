@@ -22,7 +22,9 @@ function UpdateUserModal({ user }) {
         }
       );
       setData(result);
-      console.log(result);
+      const sessionId = result.data.sessionId;
+      localStorage.setItem("accessToken", sessionId);
+      window.location.reload();
     } catch (error) {
       console.error("Error occurred during registration:", error);
     }
