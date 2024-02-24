@@ -18,7 +18,6 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/user/profile" element={<ProfilePage />} />
         <Route path="/user/blogs" element={<BlogPage />} />
-        <Route path="/blogs" element={<BlogPage />} />
         <Route path="/user/login" element={<LoginPage />} />
         <Route path="/user/register" element={<RegisterPage />} />
         <Route path="/postblog" element={<AddNewBlog />} />

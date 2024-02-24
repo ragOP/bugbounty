@@ -114,17 +114,29 @@ function FullBlog() {
               data-bs-toggle="modal"
               data-bs-target="#editBlogModal"
             >
-              Edit
+              Edit <i className="bi bi-pencil-fill ms-1"></i>
             </button>
 
             <button className="btn btn-danger btn-sm" onClick={handleDelteBlog}>
-              Delete
+              Delete <i className="bi bi-trash3-fill ms-1"></i>
             </button>
           </div>
         ) : (
           ""
         )}
-        <p className="my-4" style={{ lineHeight: "34px" }}>
+        <div
+          className="mt-3 d-flex align-items-center"
+          style={{ fontSize: "22px" }}
+        >
+          <i className="bi bi-hand-thumbs-up" style={{ cursor: "pointer" }}></i>{" "}
+          <span style={{ fontSize: "18px", marginLeft: "5px" }}>3</span>
+          <i
+            className="bi bi-hand-thumbs-down ms-3"
+            style={{ cursor: "pointer" }}
+          ></i>{" "}
+          <span style={{ fontSize: "18px", marginLeft: "5px" }}>5</span>
+        </div>
+        <p className="my-3" style={{ lineHeight: "34px" }}>
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
         </p>
         {user ? <CommentBox /> : ""}
