@@ -13,6 +13,8 @@ import UpdateBlogModal from "./UpdateBlogModal";
 function FullBlog() {
   const [blog, setBlog] = useState({});
   const [user, setUser] = useState(null);
+  const [likes, setLikes] = useState(Number);
+  const [disLikes, setDisLikes] = useState(Number);
   const [specificUser, setSpecificUser] = useState("");
 
   const { id } = useParams();
@@ -25,6 +27,28 @@ function FullBlog() {
       navigateTo("/");
     } catch (error) {
       console.error("Error fetching specific blog:", error);
+    }
+  };
+
+  const handleLikes = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/blog/likes/${id}`
+      );
+      setLikes(response.data.result.likes);
+    } catch (error) {
+      console.error("Error liking Blog:", error);
+    }
+  };
+
+  const handleDisLikes = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/blog/dislikes/${id}`
+      );
+      setDisLikes(response.data.result.dislikes);
+    } catch (error) {
+      console.error("Error Disliking Blog:", error);
     }
   };
 
@@ -42,6 +66,8 @@ function FullBlog() {
       try {
         const response = await axios.get(`http://localhost:3001/blog/${id}`);
         setBlog(response.data.result);
+        setLikes(response.data.result.likes);
+        setDisLikes(response.data.result.dislikes);
       } catch (error) {
         console.error("Error fetching specific blog:", error);
       }
@@ -128,15 +154,25 @@ function FullBlog() {
           className="mt-3 d-flex align-items-center"
           style={{ fontSize: "22px" }}
         >
-          <i className="bi bi-hand-thumbs-up" style={{ cursor: "pointer" }}></i>{" "}
-          <span style={{ fontSize: "18px", marginLeft: "5px" }}>3</span>
+          <i
+            className="bi bi-hand-thumbs-up"
+            style={{ cursor: "pointer" }}
+            onClick={handleLikes}
+          ></i>{" "}
+          <span style={{ fontSize: "18px", marginLeft: "5px" }}>{likes}</span>
           <i
             className="bi bi-hand-thumbs-down ms-3"
             style={{ cursor: "pointer" }}
+            onClick={handleDisLikes}
           ></i>{" "}
-          <span style={{ fontSize: "18px", marginLeft: "5px" }}>5</span>
+          <span style={{ fontSize: "18px", marginLeft: "5px" }}>
+            {disLikes}
+          </span>
         </div>
-        <p className="my-3" style={{ lineHeight: "34px" }}>
+        <p
+          className="my-3"
+          style={{ lineHeight: "34px", textAlign: "justify" }}
+        >
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
         </p>
         {user ? <CommentBox /> : ""}
