@@ -175,7 +175,7 @@ function FullBlog() {
         >
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
         </p>
-        {user ? <CommentBox /> : ""}
+        {user ? <CommentBox user={blog.author} id={id} /> : ""}
         <Comments />
       </div>
       <Footer />
