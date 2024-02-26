@@ -17,10 +17,15 @@ function CommentBox({ user, id }) {
 
   const handleCreateComment = async (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:3001/comment/${id}`, data);
+    try {
+      axios.post(`http://localhost:3001/comment/${id}`, data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error Disliking Blog:", error);
+    }
   };
   return (
-    <div className="d-flex align-itmes-center justify-content-center flex-column">
+    <div className="d-flex align-itmes-center justify-content-center flex-column mb-3">
       <form onSubmit={handleCreateComment}>
         <div className="mb-3">
           <textarea

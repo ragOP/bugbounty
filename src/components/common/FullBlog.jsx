@@ -12,6 +12,7 @@ import UpdateBlogModal from "./UpdateBlogModal";
 
 function FullBlog() {
   const [blog, setBlog] = useState({});
+  const [postComments, setPostComments] = useState([]);
   const [user, setUser] = useState(null);
   const [likes, setLikes] = useState(Number);
   const [disLikes, setDisLikes] = useState(Number);
@@ -79,6 +80,16 @@ function FullBlog() {
         setSpecificUser(authorData);
       }
     };
+
+    const handleGetAllComments = async () => {
+      try {
+        const result = await axios.get(`http://localhost:3001/comment/${id}`);
+        setPostComments(result.data);
+      } catch (error) {
+        console.error("Error fetching specific comment:", error);
+      }
+    };
+
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -87,7 +98,9 @@ function FullBlog() {
     if (accessToken) fetchUser();
     getSpecificBlog();
     fetchSpecificUser();
+    handleGetAllComments();
   }, [id, accessToken, blog.author]);
+  console.log(postComments);
   return (
     <div>
       <UpdateBlogModal blog={blog} />
@@ -176,7 +189,19 @@ function FullBlog() {
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
         </p>
         {user ? <CommentBox user={blog.author} id={id} /> : ""}
-        <Comments />
+        {postComments.length > 0 ? (
+          postComments.map((comment) => (
+            <Comments
+              key={comment._id}
+              comment={comment.content}
+              user={comment.author}
+            />
+          ))
+        ) : (
+          <div className="my-3">
+            <h3>No Comments Yet</h3>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
