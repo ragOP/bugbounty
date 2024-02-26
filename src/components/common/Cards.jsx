@@ -20,7 +20,7 @@ function Cards({
     const fetchSpecificUser = async () => {
       if (author) {
         const authorData = await getAuthor(author);
-        setSpecificUser(authorData);
+        setSpecificUser(authorData.username);
       }
     };
     fetchSpecificUser();

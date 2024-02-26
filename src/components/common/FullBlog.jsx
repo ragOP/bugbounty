@@ -77,7 +77,7 @@ function FullBlog() {
     const fetchSpecificUser = async () => {
       if (blog.author) {
         const authorData = await getAuthor(blog.author);
-        setSpecificUser(authorData);
+        setSpecificUser(authorData.username);
       }
     };
 
@@ -100,7 +100,6 @@ function FullBlog() {
     fetchSpecificUser();
     handleGetAllComments();
   }, [id, accessToken, blog.author]);
-  console.log(postComments);
   return (
     <div>
       <UpdateBlogModal blog={blog} />
@@ -188,7 +187,7 @@ function FullBlog() {
         >
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
         </p>
-        {user ? <CommentBox user={blog.author} id={id} /> : ""}
+        {user ? <CommentBox user={user.id} id={id} /> : ""}
         {postComments.length > 0 ? (
           postComments.map((comment) => (
             <Comments
