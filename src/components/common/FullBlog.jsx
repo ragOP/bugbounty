@@ -188,6 +188,7 @@ function FullBlog() {
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
         </p>
         {user ? <CommentBox user={user.id} id={id} /> : ""}
+        {postComments.length > 0 ? <h1 className="mt-3">Comments</h1> : ""}
         {postComments.length > 0 ? (
           postComments.map((comment) => (
             <Comments

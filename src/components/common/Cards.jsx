@@ -27,9 +27,20 @@ function Cards({
   }, [author]);
 
   const renderContent = () => {
+    const maxLength = 240;
+    if (content.length > maxLength) {
+      const truncatedContent = content
+        .slice(0, maxLength)
+        .replace(/\s+\S*$/, "");
+      return truncatedContent + " " + "...";
+    }
+    return content;
+  };
+
+  const renderTitle = (content) => {
     const words = content;
-    if (words.length > 250) {
-      const truncatedContent = words.slice(0, 250);
+    if (words.length > 50) {
+      const truncatedContent = words.slice(0, 50);
       return truncatedContent + "...";
     }
     return content;
@@ -41,10 +52,10 @@ function Cards({
         src={`http://localhost:3001/${bannerImage}`}
         className="card-img-top"
         alt="..."
-        style={{ width: "100%", height: "300px" }}
+        style={{ width: "100%", height: "250px" }}
       />
       <div className="card-body">
-        <h5 className="card-title">{title}</h5>
+        <h5 className="card-title">{renderTitle(title)}</h5>
         <div dangerouslySetInnerHTML={{ __html: renderContent() }} />
         <span className="badge bg-primary my-2 me-1">{category}</span>
         <span className="badge bg-primary my-2 me-1">

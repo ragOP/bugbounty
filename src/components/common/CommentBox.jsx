@@ -30,7 +30,7 @@ function CommentBox({ user, id }) {
         <div className="mb-3">
           <textarea
             className="form-control"
-            rows="5"
+            rows="3"
             value={data.comment}
             onChange={(e) => setData({ ...data, comment: e.target.value })}
           ></textarea>
