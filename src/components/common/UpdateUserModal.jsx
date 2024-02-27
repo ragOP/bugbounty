@@ -1,5 +1,4 @@
 import axios from "axios";
-import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 function UpdateUserModal({ user }) {
   const [data, setData] = useState({
@@ -130,13 +129,4 @@ function UpdateUserModal({ user }) {
     </div>
   );
 }
-
-UpdateUserModal.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
 export default UpdateUserModal;

@@ -1,6 +1,5 @@
 import logo from "../../assests/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 
 function NavBar({ user }) {
   const navigateTo = useNavigate();
@@ -103,9 +102,5 @@ function NavBar({ user }) {
     </nav>
   );
 }
-
-NavBar.propTypes = {
-  user: PropTypes.object.isRequired,
-};
 
 export default NavBar;
