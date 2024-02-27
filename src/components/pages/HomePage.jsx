@@ -1,7 +1,6 @@
 import Badegs from "../common/Badegs";
 import Cards from "../common/Cards";
 import NavBar from "../layout/NavBar";
-import Pagination from "../common/Pagination";
 import Footer from "../layout/Footer";
 import getUserFromJwt from "../../helper/getAccessToken";
 import { useEffect, useState } from "react";
@@ -11,10 +10,30 @@ import { Link } from "react-router-dom";
 function HomePage() {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
 
   const accessToken = localStorage.getItem("accessToken");
 
+  const handlePrevPagination = () => {
+    setPage(page - 1);
+  };
+
+  const handleNextPagination = () => {
+    setPage(page + 1);
+  };
+
   useEffect(() => {
+    const getPageSize = async () => {
+      try {
+        const result = await axios.get("http://localhost:3001/blog/pages");
+        const totalPages = Math.ceil(result.data / 3);
+        setTotalPage(totalPages);
+        console.log(totalPage);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
     const fetchUser = async () => {
       try {
         const userData = await getUserFromJwt(accessToken);
@@ -25,15 +44,18 @@ function HomePage() {
     };
     const getAllBlogs = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/blog/");
+        const response = await axios.get(
+          `http://localhost:3001/blog?page=${page}`
+        );
         setBlogs(response.data);
       } catch (error) {
         console.error("Error occurred during fetching blogs:", error);
       }
     };
     if (accessToken) fetchUser();
+    getPageSize();
     getAllBlogs();
-  }, [accessToken]);
+  }, [accessToken, page, totalPage]);
 
   return (
     <div>
@@ -83,8 +105,30 @@ function HomePage() {
           )}
         </div>
       )}
-      {user && blogs.length > 0 ? <Pagination /> : ""}
-
+      {blogs.length > 0 ? (
+        <div>
+          <nav aria-label="Page navigation example">
+            <ul className="pagination justify-content-center">
+              <li className={page > 1 ? `page-item` : `page-item disabled`}>
+                <Link className="page-link" onClick={handlePrevPagination}>
+                  Previous
+                </Link>
+              </li>
+              <li
+                className={
+                  page < totalPage ? `page-item` : `page-item disabled`
+                }
+              >
+                <Link className="page-link" onClick={handleNextPagination}>
+                  Next
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      ) : (
+        ""
+      )}
       <Footer />
     </div>
   );

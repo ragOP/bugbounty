@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 function BlogPage() {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
+
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -24,6 +25,7 @@ function BlogPage() {
         console.error("Error fetching user data:", error);
       }
     };
+
     if (accessToken) fetchUser();
   }, [accessToken]);
 

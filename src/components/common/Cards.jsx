@@ -23,11 +23,13 @@ function Cards({
         setSpecificUser(authorData.username);
       }
     };
+
     fetchSpecificUser();
   }, [author]);
 
   const renderContent = () => {
     const maxLength = 240;
+
     if (content.length > maxLength) {
       const truncatedContent = content
         .slice(0, maxLength)
