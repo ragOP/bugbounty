@@ -23,7 +23,6 @@ function Cards({
         setSpecificUser(authorData.username);
       }
     };
-
     fetchSpecificUser();
   }, [author]);
 
@@ -61,7 +60,7 @@ function Cards({
         <div dangerouslySetInnerHTML={{ __html: renderContent() }} />
         <span className="badge bg-primary my-2 me-1">{category}</span>
         <span className="badge bg-primary my-2 me-1">
-          Total Views - {totalViews}
+          Total Views - {Math.round(totalViews)}
         </span>
         <span className="badge bg-primary my-2">{readTime} min</span>
         <span className="badge bg-success my-2 w-100">

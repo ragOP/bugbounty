@@ -54,52 +54,42 @@ function FullBlog() {
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchData = async () => {
       try {
-        const userData = await getUserFromJwt(accessToken);
-        setUser(userData);
+        if (accessToken) {
+          const userData = await getUserFromJwt(accessToken);
+          setUser(userData);
+        }
+
+        const blogResponse = await axios.get(
+          `http://localhost:3001/blog/${id}`
+        );
+        const blogData = blogResponse.data.result;
+        setBlog(blogData);
+        setLikes(blogData.likes);
+        setDisLikes(blogData.dislikes);
+
+        if (blogData.author) {
+          const authorData = await getAuthor(blogData.author);
+          setSpecificUser(authorData.username);
+        }
+
+        const commentsResponse = await axios.get(
+          `http://localhost:3001/comment/${id}`
+        );
+        setPostComments(commentsResponse.data);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    const getSpecificBlog = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/blog/${id}`);
-        setBlog(response.data.result);
-        setLikes(response.data.result.likes);
-        setDisLikes(response.data.result.dislikes);
-      } catch (error) {
-        console.error("Error fetching specific blog:", error);
-      }
-    };
-
-    const fetchSpecificUser = async () => {
-      if (blog.author) {
-        const authorData = await getAuthor(blog.author);
-        setSpecificUser(authorData.username);
-      }
-    };
-
-    const handleGetAllComments = async () => {
-      try {
-        const result = await axios.get(`http://localhost:3001/comment/${id}`);
-        setPostComments(result.data);
-      } catch (error) {
-        console.error("Error fetching specific comment:", error);
-      }
-    };
-
+    fetchData();
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+  }, [id, accessToken]);
 
-    if (accessToken) fetchUser();
-    getSpecificBlog();
-    fetchSpecificUser();
-    handleGetAllComments();
-  }, [id, accessToken, blog.author]);
   return (
     <div>
       <UpdateBlogModal blog={blog} />
@@ -124,7 +114,7 @@ function FullBlog() {
             className="badge bg-primary mx-1 my-2"
             style={{ cursor: "pointer" }}
           >
-            Total Views - {blog.totalViews}
+            Total Views - {Math.round(blog.totalViews)}
           </span>
           <span
             className="badge bg-primary mx-1 my-2"

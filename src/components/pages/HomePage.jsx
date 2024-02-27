@@ -24,38 +24,29 @@ function HomePage() {
   };
 
   useEffect(() => {
-    const getPageSize = async () => {
+    const fetchData = async () => {
       try {
-        const result = await axios.get("http://localhost:3001/blog/pages");
-        const totalPages = Math.ceil(result.data / 3);
+        if (accessToken) {
+          const userData = await getUserFromJwt(accessToken);
+          setUser(userData);
+        }
+
+        const pageSizeResult = await axios.get(
+          "http://localhost:3001/blog/pages"
+        );
+        const totalPages = Math.ceil(pageSizeResult.data / 6);
         setTotalPage(totalPages);
-        console.log(totalPage);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    const fetchUser = async () => {
-      try {
-        const userData = await getUserFromJwt(accessToken);
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    const getAllBlogs = async () => {
-      try {
+
         const response = await axios.get(
           `http://localhost:3001/blog?page=${page}`
         );
         setBlogs(response.data);
       } catch (error) {
-        console.error("Error occurred during fetching blogs:", error);
+        console.error("Error occurred during fetching data:", error);
       }
     };
-    if (accessToken) fetchUser();
-    getPageSize();
-    getAllBlogs();
-  }, [accessToken, page, totalPage]);
+    fetchData();
+  }, [accessToken, page]);
 
   return (
     <div>
