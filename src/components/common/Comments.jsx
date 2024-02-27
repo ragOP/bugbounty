@@ -9,13 +9,10 @@ function Comments({ comment, user }) {
       if (user) {
         const authorData = await getAuthor(user);
         setSpecificUser(authorData);
-        console.log(user);
       }
     };
     fetchSpecificUser();
   }, [user]);
-
-  console.log("1", user);
 
   return (
     <div className="mt-2">

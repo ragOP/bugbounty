@@ -5,22 +5,28 @@ import Cards from "./Cards";
 import getUserFromJwt from "../../helper/getAccessToken";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import LoadingBar from "react-top-loading-bar";
 
 function BlogPage() {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  const [progress, setProgress] = useState(0);
 
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setProgress(30);
         const userData = await getUserFromJwt(accessToken);
         setUser(userData);
+        setProgress(50);
         const result = await axios.get(
           `http://localhost:3001/blog/user/${userData.id}`
         );
+        setProgress(80);
         setBlogs(result.data.result);
+        setProgress(100);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -31,6 +37,7 @@ function BlogPage() {
 
   return (
     <div>
+      <LoadingBar color="#f11946" progress={progress} height={3} />
       <NavBar user={user} />
       {blogs.length > 0 ? (
         <div className="d-flex align-items-center justify-content-center flex-wrap">

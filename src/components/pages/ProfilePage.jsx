@@ -3,17 +3,21 @@ import UpdateUserModal from "../common/UpdateUserModal";
 import Footer from "../layout/Footer";
 import NavBar from "../layout/NavBar";
 import getUserFromJwt from "../../helper/getAccessToken";
+import LoadingBar from "react-top-loading-bar";
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
+  const [progress, setProgress] = useState(0);
 
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setProgress(50);
         const userData = await getUserFromJwt(accessToken);
         setUser(userData);
+        setProgress(100);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -22,23 +26,12 @@ function ProfilePage() {
   }, [accessToken]);
 
   if (!user) {
-    return (
-      <>
-        <NavBar user={null} />
-        <div
-          className="d-flex align-items-center justify-content-center my-5"
-          style={{ height: "100vh" }}
-        >
-          <div className="spinner-border text-primary" role="status">
-            <span className="sr-only"></span>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
+    return <></>;
   }
+
   return (
     <>
+      <LoadingBar color="#f11946" progress={progress} height={3} />
       <NavBar user={user} />
       <div className="container my-4 d-flex align-items-center justify-content-center flex-column">
         <img

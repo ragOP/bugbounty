@@ -9,6 +9,7 @@ import getAuthor from "../../helper/getspecificUser";
 import CommentBox from "./CommentBox";
 import Comments from "./Comments";
 import UpdateBlogModal from "./UpdateBlogModal";
+import LoadingBar from "react-top-loading-bar";
 
 function FullBlog() {
   const [blog, setBlog] = useState({});
@@ -17,6 +18,7 @@ function FullBlog() {
   const [likes, setLikes] = useState(Number);
   const [disLikes, setDisLikes] = useState(Number);
   const [specificUser, setSpecificUser] = useState("");
+  const [progress, setProgress] = useState(0);
 
   const { id } = useParams();
   const navigateTo = useNavigate();
@@ -60,6 +62,7 @@ function FullBlog() {
           const userData = await getUserFromJwt(accessToken);
           setUser(userData);
         }
+        setProgress(30);
 
         const blogResponse = await axios.get(
           `http://localhost:3001/blog/${id}`
@@ -68,16 +71,20 @@ function FullBlog() {
         setBlog(blogData);
         setLikes(blogData.likes);
         setDisLikes(blogData.dislikes);
+        setProgress(50);
 
         if (blogData.author) {
           const authorData = await getAuthor(blogData.author);
           setSpecificUser(authorData.username);
+          setProgress(70);
         }
 
         const commentsResponse = await axios.get(
           `http://localhost:3001/comment/${id}`
         );
+        setProgress(90);
         setPostComments(commentsResponse.data);
+        setProgress(100);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -93,6 +100,7 @@ function FullBlog() {
   return (
     <div>
       <UpdateBlogModal blog={blog} />
+      <LoadingBar color="#f11946" progress={progress} height={3} />
       <NavBar user={user} />
       <div className="container d-flex justify-content-center flex-column">
         <h1 className="mt-4 text-center">{blog.title}</h1>

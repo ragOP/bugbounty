@@ -6,12 +6,14 @@ import getUserFromJwt from "../../helper/getAccessToken";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import LoadingBar from "react-top-loading-bar";
 
 function HomePage() {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const accessToken = localStorage.getItem("accessToken");
 
@@ -30,26 +32,33 @@ function HomePage() {
           const userData = await getUserFromJwt(accessToken);
           setUser(userData);
         }
-
+        setProgress(20);
         const pageSizeResult = await axios.get(
           "http://localhost:3001/blog/pages"
         );
         const totalPages = Math.ceil(pageSizeResult.data / 6);
         setTotalPage(totalPages);
+        setProgress(50);
 
         const response = await axios.get(
           `http://localhost:3001/blog?page=${page}`
         );
         setBlogs(response.data);
+        setProgress(100);
       } catch (error) {
         console.error("Error occurred during fetching data:", error);
       }
     };
     fetchData();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [accessToken, page]);
 
   return (
     <div>
+      <LoadingBar color="#f11946" progress={progress} height={3} />
       <NavBar user={user} />
       {user && blogs.length ? <Badegs /> : ""}
       {blogs.length > 0 ? (

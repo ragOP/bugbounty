@@ -5,6 +5,7 @@ import getUserFromJwt from "../../helper/getAccessToken";
 import axios from "axios";
 import JoditEditor from "jodit-react";
 import { useNavigate } from "react-router-dom";
+import LoadingBar from "react-top-loading-bar";
 
 function AddNewBlog() {
   const [user, setUser] = useState(null);
@@ -12,6 +13,7 @@ function AddNewBlog() {
   const [description, setDescription] = useState("");
   const [bannerImage, setBannerImage] = useState(null);
   const [category, setCategory] = useState("");
+  const [progress, setProgress] = useState(0);
 
   const editor = useRef(null);
 
@@ -47,8 +49,10 @@ function AddNewBlog() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setProgress(50);
         const userData = await getUserFromJwt(accessToken);
         setUser(userData);
+        setProgress(100);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -58,6 +62,7 @@ function AddNewBlog() {
 
   return (
     <>
+      <LoadingBar color="#f11946" progress={progress} height={3} />
       <NavBar user={user} />
       <div className="container my-4">
         <h3 className="text-center">Post A New Blog</h3>
