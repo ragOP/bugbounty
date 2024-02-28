@@ -26,6 +26,10 @@ function HomePage() {
     setPage(page + 1);
   };
 
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,6 +51,7 @@ function HomePage() {
       }
     };
     fetchData();
+    handleScrollToTop();
   }, [accessToken, page, baseUrl]);
 
   return (
