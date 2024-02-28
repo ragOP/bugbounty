@@ -24,6 +24,7 @@ function UpdateUserModal({ user }) {
       const sessionId = result.data.sessionId;
       await localStorage.setItem("accessToken", sessionId);
       navigateTo("/");
+      window.location.reload();
     } catch (error) {
       console.error("Error occurred during registration:", error);
     }

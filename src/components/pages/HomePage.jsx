@@ -16,7 +16,6 @@ function HomePage() {
   const [progress, setProgress] = useState(0);
 
   const accessToken = localStorage.getItem("accessToken");
-
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
   const handlePrevPagination = () => {
@@ -48,7 +47,6 @@ function HomePage() {
       }
     };
     fetchData();
-    window.location.reload();
   }, [accessToken, page, baseUrl]);
 
   return (
