@@ -22,10 +22,6 @@ function AboutPage() {
       }
     };
     if (accessToken) fetchUser();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   }, [accessToken]);
 
   return (

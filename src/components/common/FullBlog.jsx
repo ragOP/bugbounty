@@ -86,10 +86,6 @@ function FullBlog() {
     };
 
     fetchData();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   }, [id, accessToken, baseUrl]);
 
   return (

@@ -48,10 +48,6 @@ function HomePage() {
       }
     };
     fetchData();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   }, [accessToken, page, baseUrl]);
 
   return (
