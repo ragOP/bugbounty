@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CommentBox({ user, id }) {
   const [data, setData] = useState({
     comment: "",
     user: "",
   });
+
+  const navigateTo = useNavigate();
 
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
@@ -21,7 +24,7 @@ function CommentBox({ user, id }) {
     e.preventDefault();
     try {
       await axios.post(`${baseUrl}/comment/${id}`, data);
-      window.location.reload();
+      navigateTo(`/blog${id}`);
     } catch (error) {
       console.error("Error Disliking Blog:", error);
     }
