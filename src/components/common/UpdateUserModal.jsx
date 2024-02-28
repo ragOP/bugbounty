@@ -8,18 +8,16 @@ function UpdateUserModal({ user }) {
     profilePicture: null,
   });
 
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     try {
-      const result = await axios.post(
-        `http://localhost:3001/user/edit/${user.id}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const result = await axios.post(`${baseUrl}/user/edit/${user.id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setData(result);
       const sessionId = result.data.sessionId;
       localStorage.setItem("accessToken", sessionId);

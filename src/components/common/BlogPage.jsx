@@ -12,6 +12,8 @@ function BlogPage() {
   const [blogs, setBlogs] = useState([]);
   const [progress, setProgress] = useState(0);
 
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -21,9 +23,7 @@ function BlogPage() {
         const userData = await getUserFromJwt(accessToken);
         setUser(userData);
         setProgress(50);
-        const result = await axios.get(
-          `http://localhost:3001/blog/user/${userData.id}`
-        );
+        const result = await axios.get(`${baseUrl}/blog/user/${userData.id}`);
         setProgress(80);
         setBlogs(result.data.result);
         setProgress(100);
@@ -33,7 +33,7 @@ function BlogPage() {
     };
 
     if (accessToken) fetchUser();
-  }, [accessToken]);
+  }, [accessToken, baseUrl]);
 
   return (
     <div>

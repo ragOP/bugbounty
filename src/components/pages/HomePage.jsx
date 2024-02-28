@@ -17,6 +17,8 @@ function HomePage() {
 
   const accessToken = localStorage.getItem("accessToken");
 
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
   const handlePrevPagination = () => {
     setPage(page - 1);
   };
@@ -33,16 +35,12 @@ function HomePage() {
           setUser(userData);
         }
         setProgress(20);
-        const pageSizeResult = await axios.get(
-          "http://localhost:3001/blog/pages"
-        );
+        const pageSizeResult = await axios.get(`${baseUrl}/blog/pages`);
         const totalPages = Math.ceil(pageSizeResult.data / 6);
         setTotalPage(totalPages);
         setProgress(50);
 
-        const response = await axios.get(
-          `http://localhost:3001/blog?page=${page}`
-        );
+        const response = await axios.get(`${baseUrl}/blog?page=${page}`);
         setBlogs(response.data);
         setProgress(100);
       } catch (error) {
@@ -54,7 +52,7 @@ function HomePage() {
       top: 0,
       behavior: "smooth",
     });
-  }, [accessToken, page]);
+  }, [accessToken, page, baseUrl]);
 
   return (
     <div>

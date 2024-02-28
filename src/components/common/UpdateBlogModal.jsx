@@ -10,6 +10,8 @@ function UpdateBlogModal({ blog }) {
     bannerImage: null,
   });
 
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
   useEffect(() => {
     if (blog) {
       setData({
@@ -24,15 +26,11 @@ function UpdateBlogModal({ blog }) {
     e.preventDefault();
     try {
       const id = blog._id;
-      const result = await axios.post(
-        `http://localhost:3001/blog/${id}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const result = await axios.post(`${baseUrl}/blog/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setData(result);
       window.location.reload();
     } catch (error) {

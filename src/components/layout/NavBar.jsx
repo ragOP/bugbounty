@@ -8,25 +8,27 @@ function NavBar({ user }) {
     navigateTo("/");
     window.location.reload();
   }
+
+  const localUrl = import.meta.env.VITE_LOCAL_URL;
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid d-flex align-items-center justify-content-around">
-        <Link to="/">
-          <img className="navbar-brand" src={logo} style={{ width: "140px" }} />
+      <div className="container-fluid container-lg">
+        <Link className="navbar-brand" to="/">
+          <img src={logo} style={{ width: "140px" }} />
         </Link>
-        <form className="d-flex">
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button className="btn btn-success" type="submit">
-            <i className="bi bi-search"></i>
-          </button>
-        </form>
-        <div className="" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" aria-current="page" to="/">
                 Home
@@ -43,9 +45,9 @@ function NavBar({ user }) {
               </Link>
             </li>
             {user ? (
-              <li className="nav-item dropdown d-flex align-items-center ms-3">
+              <li className="nav-item dropdown d-flex align-items-center ms-3-lg">
                 <img
-                  src={`http://localhost:3001/${user.profilePicture}`}
+                  src={`${localUrl}/${user.profilePicture}`}
                   alt="profile"
                   style={{ width: "25px", borderRadius: "50%", height: "25px" }}
                   className="mb-3"
@@ -57,6 +59,7 @@ function NavBar({ user }) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
+                  {" "}
                   {user.username}
                 </p>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -74,6 +77,9 @@ function NavBar({ user }) {
                     <Link className="dropdown-item" to="/user/blogs">
                       My Blogs
                     </Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
                   </li>
                   <li>
                     <Link className="dropdown-item" onClick={logoutUser}>

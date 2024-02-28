@@ -11,6 +11,8 @@ function ProfilePage() {
 
   const accessToken = localStorage.getItem("accessToken");
 
+  const localUrl = import.meta.env.VITE_LOCAL_URL;
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -35,7 +37,7 @@ function ProfilePage() {
       <NavBar user={user} />
       <div className="container my-4 d-flex align-items-center justify-content-center flex-column">
         <img
-          src={`http://localhost:3001/${user.profilePicture}`}
+          src={`${localUrl}/${user.profilePicture}`}
           alt="user-profile"
           style={{ width: "150px", borderRadius: "50%", height: "150px" }}
         />

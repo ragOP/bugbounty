@@ -4,6 +4,8 @@ import getAuthor from "../../helper/getspecificUser";
 function Comments({ comment, user }) {
   const [specificUser, setSpecificUser] = useState({});
 
+  const localUrl = import.meta.env.VITE_LOCAL_URL;
+
   useEffect(() => {
     const fetchSpecificUser = async () => {
       if (user) {
@@ -19,7 +21,7 @@ function Comments({ comment, user }) {
       <div className="d-flex align-items-left" key={comment._id}>
         <img
           className="me-3"
-          src={`http://localhost:3001/${specificUser.profilePicture}`}
+          src={`${localUrl}/${specificUser.profilePicture}`}
           alt="profile-picture"
           style={{ height: "25px", width: "25px", borderRadius: "50%" }}
         />

@@ -20,12 +20,13 @@ function AddNewBlog() {
   const accessToken = localStorage.getItem("accessToken");
   const navigateTo = useNavigate();
 
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
   const handleCreateNewBlog = async (e) => {
     e.preventDefault();
-    console.log("Description: ", description);
     try {
       const blog = await axios.post(
-        "http://localhost:3001/blog/create",
+        `${baseUrl}/blog/create`,
         {
           title,
           author: user.id,

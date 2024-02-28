@@ -24,9 +24,12 @@ function FullBlog() {
   const navigateTo = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
 
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+  const localUrl = import.meta.env.VITE_LOCAL_URL;
+
   const handleDelteBlog = async () => {
     try {
-      await axios.get(`http://localhost:3001/blog/delete/${id}`);
+      await axios.get(`${baseUrl}/blog/delete/${id}`);
       navigateTo("/");
     } catch (error) {
       console.error("Error fetching specific blog:", error);
@@ -35,9 +38,7 @@ function FullBlog() {
 
   const handleLikes = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/blog/likes/${id}`
-      );
+      const response = await axios.get(`${baseUrl}/blog/likes/${id}`);
       setLikes(response.data.result.likes);
     } catch (error) {
       console.error("Error liking Blog:", error);
@@ -46,9 +47,7 @@ function FullBlog() {
 
   const handleDisLikes = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/blog/dislikes/${id}`
-      );
+      const response = await axios.get(`${baseUrl}/blog/dislikes/${id}`);
       setDisLikes(response.data.result.dislikes);
     } catch (error) {
       console.error("Error Disliking Blog:", error);
@@ -64,9 +63,7 @@ function FullBlog() {
         }
         setProgress(30);
 
-        const blogResponse = await axios.get(
-          `http://localhost:3001/blog/${id}`
-        );
+        const blogResponse = await axios.get(`${baseUrl}/blog/${id}`);
         const blogData = blogResponse.data.result;
         setBlog(blogData);
         setLikes(blogData.likes);
@@ -79,9 +76,7 @@ function FullBlog() {
           setProgress(70);
         }
 
-        const commentsResponse = await axios.get(
-          `http://localhost:3001/comment/${id}`
-        );
+        const commentsResponse = await axios.get(`${baseUrl}/comment/${id}`);
         setProgress(90);
         setPostComments(commentsResponse.data);
         setProgress(100);
@@ -95,7 +90,7 @@ function FullBlog() {
       top: 0,
       behavior: "smooth",
     });
-  }, [id, accessToken]);
+  }, [id, accessToken, baseUrl]);
 
   return (
     <div>
@@ -138,7 +133,7 @@ function FullBlog() {
           </span>
         </div>
         <img
-          src={`http://localhost:3001/${blog.bannerImage}`}
+          src={`${localUrl}/${blog.bannerImage}`}
           alt="thumbnail image"
           style={{ width: "100%", height: "300px", objectFit: "cover" }}
         />

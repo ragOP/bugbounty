@@ -9,12 +9,13 @@ function LoginPage() {
   const [password, setPassword] = useState("");
 
   const navigateTo = useNavigate();
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const user = await axios.post("http://localhost:3001/user/login", {
+      const user = await axios.post(`${baseUrl}/user/login`, {
         email,
         password,
       });

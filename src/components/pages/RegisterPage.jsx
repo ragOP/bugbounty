@@ -12,13 +12,14 @@ function RegisterPage() {
   const [profilePicture, setProfilePicture] = useState(null);
 
   const navigateTo = useNavigate();
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const user = await axios.post(
-        "http://localhost:3001/user/register",
+        `${baseUrl}/user/register`,
         {
           username,
           email,

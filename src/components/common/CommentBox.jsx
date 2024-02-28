@@ -7,6 +7,8 @@ function CommentBox({ user, id }) {
     user: "",
   });
 
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+
   useEffect(() => {
     if (user) {
       setData({
@@ -18,7 +20,7 @@ function CommentBox({ user, id }) {
   const handleCreateComment = async (e) => {
     e.preventDefault();
     try {
-      axios.post(`http://localhost:3001/comment/${id}`, data);
+      await axios.post(`${baseUrl}/comment/${id}`, data);
       window.location.reload();
     } catch (error) {
       console.error("Error Disliking Blog:", error);
