@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CommentBox({ user, id }) {
   const [data, setData] = useState({
@@ -9,6 +9,7 @@ function CommentBox({ user, id }) {
   });
 
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -22,7 +23,7 @@ function CommentBox({ user, id }) {
     e.preventDefault();
     try {
       await axios.post(`${baseUrl}/comment/${id}`, data);
-      history.push(history.location.pathname);
+      await navigate("/");
     } catch (error) {
       console.error("Error Disliking Blog:", error);
     }
