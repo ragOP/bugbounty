@@ -10,8 +10,11 @@ function ProfilePage() {
   const [progress, setProgress] = useState(0);
 
   const accessToken = localStorage.getItem("accessToken");
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  const localUrl = import.meta.env.VITE_LOCAL_URL;
+  const localUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -25,6 +28,7 @@ function ProfilePage() {
       }
     };
     if (accessToken) fetchUser();
+    handleScrollToTop();
   }, [accessToken]);
 
   if (!user) {

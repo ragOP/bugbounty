@@ -8,7 +8,7 @@ function NavBar({ user }) {
     navigateTo("/");
   }
 
-  const localUrl = import.meta.env.VITE_LOCAL_URL;
+  const localUrl = import.meta.env.VITE_BACKEND_BASE_URL;
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid container-lg">

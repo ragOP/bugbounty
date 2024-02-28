@@ -15,7 +15,7 @@ function Cards({
   author,
 }) {
   const [specificUser, setSpecificUser] = useState("");
-  const localUrl = import.meta.env.VITE_LOCAL_URL;
+  const localUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
   useEffect(() => {
     const fetchSpecificUser = async () => {

@@ -25,7 +25,10 @@ function FullBlog() {
   const accessToken = localStorage.getItem("accessToken");
 
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
-  const localUrl = import.meta.env.VITE_LOCAL_URL;
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleDelteBlog = async () => {
     try {
@@ -86,6 +89,7 @@ function FullBlog() {
     };
 
     fetchData();
+    handleScrollToTop();
   }, [id, accessToken, baseUrl]);
 
   return (
@@ -129,7 +133,7 @@ function FullBlog() {
           </span>
         </div>
         <img
-          src={`${localUrl}/${blog.bannerImage}`}
+          src={`${baseUrl}/${blog.bannerImage}`}
           alt="thumbnail image"
           style={{ width: "100%", height: "300px", objectFit: "cover" }}
         />

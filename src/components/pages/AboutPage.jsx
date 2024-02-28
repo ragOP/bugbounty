@@ -10,6 +10,10 @@ function AboutPage() {
 
   const accessToken = localStorage.getItem("accessToken");
 
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -22,6 +26,7 @@ function AboutPage() {
       }
     };
     if (accessToken) fetchUser();
+    handleScrollToTop();
   }, [accessToken]);
 
   return (
