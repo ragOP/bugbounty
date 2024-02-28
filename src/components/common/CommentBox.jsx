@@ -8,7 +8,6 @@ function CommentBox({ user, id }) {
   });
 
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -22,7 +21,7 @@ function CommentBox({ user, id }) {
     e.preventDefault();
     try {
       await axios.post(`${baseUrl}/comment/${id}`, data);
-      navigateTo(`/blog${id}`);
+      window.location.reload();
     } catch (error) {
       console.error("Error Disliking Blog:", error);
     }

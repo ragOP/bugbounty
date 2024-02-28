@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import JoditEditor from "jodit-react";
-import { useNavigate } from "react-router-dom";
 function UpdateBlogModal({ blog }) {
   const editor = useRef(null);
   const [data, setData] = useState({
@@ -12,7 +11,6 @@ function UpdateBlogModal({ blog }) {
   });
 
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
-  const navigateTo = useNavigate();
 
   useEffect(() => {
     if (blog) {
@@ -34,7 +32,6 @@ function UpdateBlogModal({ blog }) {
         },
       });
       setData(result);
-      navigateTo("/");
       window.location.reload();
     } catch (error) {
       console.error("Error occurred during registration:", error);

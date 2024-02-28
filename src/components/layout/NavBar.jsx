@@ -6,6 +6,7 @@ function NavBar({ user }) {
   function logoutUser() {
     localStorage.removeItem("accessToken");
     navigateTo("/");
+    window.location.reload();
   }
 
   const localUrl = import.meta.env.VITE_BACKEND_BASE_URL;
