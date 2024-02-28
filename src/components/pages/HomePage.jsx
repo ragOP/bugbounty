@@ -48,6 +48,7 @@ function HomePage() {
       }
     };
     fetchData();
+    window.location.reload();
   }, [accessToken, page, baseUrl]);
 
   return (
