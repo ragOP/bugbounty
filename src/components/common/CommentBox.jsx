@@ -24,7 +24,7 @@ function CommentBox({ user, id }) {
     e.preventDefault();
     try {
       await axios.post(`${baseUrl}/comment/${id}`, data);
-      navigateTo(`/blog${id}`);
+      navigateTo(`/blog/${id}`);
     } catch (error) {
       console.error("Error Disliking Blog:", error);
     }
