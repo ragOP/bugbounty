@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 function UpdateUserModal({ user }) {
   const [data, setData] = useState({
     username: "",
@@ -9,6 +10,7 @@ function UpdateUserModal({ user }) {
   });
 
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+  const navigateTo = useNavigate();
 
   const handleUpdateUser = async (e) => {
     e.preventDefault();
@@ -20,8 +22,8 @@ function UpdateUserModal({ user }) {
       });
       setData(result);
       const sessionId = result.data.sessionId;
-      localStorage.setItem("accessToken", sessionId);
-      window.location.reload();
+      await localStorage.setItem("accessToken", sessionId);
+      navigateTo("/");
     } catch (error) {
       console.error("Error occurred during registration:", error);
     }
