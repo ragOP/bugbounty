@@ -9,7 +9,6 @@ function NavBar({ user }) {
     window.location.reload();
   }
 
-  const localUrl = import.meta.env.VITE_BACKEND_BASE_URL;
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid container-lg">
@@ -47,7 +46,7 @@ function NavBar({ user }) {
             {user ? (
               <li className="nav-item dropdown d-flex align-items-center ms-3-lg">
                 <img
-                  src={`${localUrl}/${user.profilePicture}`}
+                  src={user.profilePicture}
                   alt="profile"
                   style={{ width: "25px", borderRadius: "50%", height: "25px" }}
                   className="mb-3"

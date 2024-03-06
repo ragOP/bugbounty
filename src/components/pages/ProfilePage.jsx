@@ -14,8 +14,6 @@ function ProfilePage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const localUrl = import.meta.env.VITE_BACKEND_BASE_URL;
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -41,7 +39,7 @@ function ProfilePage() {
       <NavBar user={user} />
       <div className="container my-4 d-flex align-items-center justify-content-center flex-column">
         <img
-          src={`${localUrl}/${user.profilePicture}`}
+          src={user.profilePicture}
           alt="user-profile"
           style={{ width: "150px", borderRadius: "50%", height: "150px" }}
         />

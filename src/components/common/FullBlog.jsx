@@ -133,7 +133,7 @@ function FullBlog() {
           </span>
         </div>
         <img
-          src={`${baseUrl}/${blog.bannerImage}`}
+          src={blog.bannerImage}
           alt="thumbnail image"
           style={{ width: "100%", height: "300px", objectFit: "cover" }}
         />

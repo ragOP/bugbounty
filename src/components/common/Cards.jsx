@@ -15,7 +15,6 @@ function Cards({
   author,
 }) {
   const [specificUser, setSpecificUser] = useState("");
-  const localUrl = import.meta.env.VITE_BACKEND_BASE_URL;
 
   useEffect(() => {
     const fetchSpecificUser = async () => {
@@ -51,7 +50,7 @@ function Cards({
   return (
     <div className="card mx-3 my-4" style={{ width: "23rem" }} key={_id}>
       <img
-        src={`${localUrl}/${bannerImage}`}
+        src={bannerImage}
         className="card-img-top"
         alt="..."
         style={{ width: "100%", height: "250px" }}
