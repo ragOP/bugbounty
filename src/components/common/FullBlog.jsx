@@ -16,7 +16,7 @@ function FullBlog() {
   const [postComments, setPostComments] = useState([]);
   const [user, setUser] = useState(null);
   const [likes, setLikes] = useState(Number);
-  const [disLikes, setDisLikes] = useState(Number);
+  const [disLikes, setDisLikes] = useState(0);
   const [specificUser, setSpecificUser] = useState("");
   const [progress, setProgress] = useState(0);
 
@@ -41,8 +41,15 @@ function FullBlog() {
 
   const handleLikes = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/blog/likes/${id}`);
-      setLikes(response.data.result.likes);
+      const response = await axios.get(
+        `${baseUrl}/blog/likes/${id}?userId=${user.id}`
+      );
+      if (response.data.message === "Alreday Disliked") {
+        alert("Message Already Liked, Can't Dislike now");
+        setLikes(likes);
+      } else {
+        setLikes(response.data.result.dislikes);
+      }
     } catch (error) {
       console.error("Error liking Blog:", error);
     }
@@ -50,8 +57,15 @@ function FullBlog() {
 
   const handleDisLikes = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/blog/dislikes/${id}`);
-      setDisLikes(response.data.result.dislikes);
+      const response = await axios.get(
+        `${baseUrl}/blog/dislikes/${id}?userId=${user.id}`
+      );
+      if (response.data.message === "Alreday Liked") {
+        alert("Message Already Liked, Can't Dislike now");
+        setDisLikes(disLikes);
+      } else {
+        setDisLikes(response.data.result.dislikes);
+      }
     } catch (error) {
       console.error("Error Disliking Blog:", error);
     }
