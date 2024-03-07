@@ -8,10 +8,17 @@ import LoginPage from "./components/pages/LoginPage";
 import RegisterPage from "./components/pages/RegisterPage";
 import AddNewBlog from "./components/pages/AddNewBlog";
 import FullBlog from "./components/common/FullBlog";
+import { useEffect, useState } from "react";
 
 function App() {
-  const accessToken = localStorage.getItem("accessToken");
-  const isAuthenticated = !!accessToken;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const accessToken = await localStorage.getItem("accessToken");
+      if (accessToken) setIsAuthenticated(true);
+    })();
+  }, [isAuthenticated]);
 
   return (
     <BrowserRouter>
