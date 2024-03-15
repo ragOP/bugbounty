@@ -38,12 +38,14 @@ function HomePage() {
           setUser(userData);
         }
         setProgress(20);
-        const pageSizeResult = await axios.get(`${baseUrl}/blog/pages`);
+        const pageSizeResult = await axios.get(`
+        https://quill-quest-server.onrender.com/blog/pages`);
         const totalPages = Math.ceil(pageSizeResult.data / 6);
         setTotalPage(totalPages);
         setProgress(50);
 
-        const response = await axios.get(`${baseUrl}/blog?page=${page}`);
+        const response = await axios.get(`
+        https://quill-quest-server.onrender.com/blog?page=${page}`);
         setBlogs(response.data);
         setProgress(100);
       } catch (error) {
