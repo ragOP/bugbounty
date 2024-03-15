@@ -1,12 +1,12 @@
-import Badegs from "../common/Badegs";
-import Cards from "../common/Cards";
+import  { useState, useEffect } from 'react';
+import {  Link } from 'react-router-dom';
+import axios from 'axios';
+import LoadingBar from 'react-top-loading-bar';
+import Cards from '../common/Cards';
 import NavBar from "../layout/NavBar";
+import  Badges  from '../common/Cards';
 import Footer from "../layout/Footer";
 import getUserFromJwt from "../../helper/getAccessToken";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import LoadingBar from "react-top-loading-bar";
 
 function HomePage() {
   const [user, setUser] = useState(null);
@@ -14,42 +14,44 @@ function HomePage() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [error, setError] = useState(null);
 
-  const accessToken = localStorage.getItem("accessToken");
-  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
+  const accessToken = localStorage.getItem('accessToken');
+  const baseUrl = "https://quill-quest-server.onrender.com"
+
 
   const handlePrevPagination = () => {
-    setPage(page - 1);
+    setPage((prevPage) => prevPage - 1);
   };
 
   const handleNextPagination = () => {
-    setPage(page + 1);
+    setPage((prevPage) => prevPage + 1);
   };
 
   const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setError(null);
         if (accessToken) {
           const userData = await getUserFromJwt(accessToken);
           setUser(userData);
         }
         setProgress(20);
-        const pageSizeResult = await axios.get(`
-        https://quill-quest-server.onrender.com/blog/pages`);
+        const pageSizeResult = await axios.get(`${baseUrl}/blog/pages`);
         const totalPages = Math.ceil(pageSizeResult.data / 6);
         setTotalPage(totalPages);
         setProgress(50);
 
-        const response = await axios.get(`
-        https://quill-quest-server.onrender.com/blog?page=${page}`);
+        const response = await axios.get(`${baseUrl}/blog?page=${page}`);
         setBlogs(response.data);
         setProgress(100);
       } catch (error) {
-        console.error("Error occurred during fetching data:", error);
+        setError('An error occurred while fetching data. Please try again later.');
+        console.error('Error occurred during fetching data:', error);
       }
     };
     fetchData();
@@ -60,8 +62,14 @@ function HomePage() {
     <div>
       <LoadingBar color="#f11946" progress={progress} height={3} />
       <NavBar user={user} />
-      {user && blogs.length ? <Badegs /> : ""}
-      {blogs.length > 0 ? (
+      {user && blogs.length ? <Badges /> : ''}
+      {error ? (
+        <div className="container d-flex align-items-center justify-content-center flex-column" style={{ height: '50vh' }}>
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        </div>
+      ) : blogs.length > 0 ? (
         <div className="d-flex align-items-center justify-content-center flex-wrap">
           {blogs.map((blog) => (
             <Cards
@@ -79,18 +87,12 @@ function HomePage() {
           ))}
         </div>
       ) : (
-        <div
-          className="container d-flex align-items-center justify-content-center flex-column"
-          style={{
-            height: "50vh",
-          }}
-        >
+        <div className="container d-flex align-items-center justify-content-center flex-column" style={{ height: '50vh' }}>
           <div className="alert alert-primary" role="alert">
             No Blogs Available, Write Blogs!
           </div>
           {user ? (
             <Link to="/postblog" className="btn btn-primary btn-sm">
-              {" "}
               Go To Post Blog
             </Link>
           ) : (
@@ -109,26 +111,20 @@ function HomePage() {
         <div>
           <nav aria-label="Page navigation example">
             <ul className="pagination justify-content-center">
-              <li className={page > 1 ? `page-item` : `page-item disabled`}>
-                <Link className="page-link" onClick={handlePrevPagination}>
+              <li className={page > 1 ? 'page-item' : 'page-item disabled'}>
+                <button className="page-link" onClick={handlePrevPagination} disabled={page <= 1}>
                   Previous
-                </Link>
+                </button>
               </li>
-              <li
-                className={
-                  page < totalPage ? `page-item` : `page-item disabled`
-                }
-              >
-                <Link className="page-link" onClick={handleNextPagination}>
+              <li className={page < totalPage ? 'page-item' : 'page-item disabled'}>
+                <button className="page-link" onClick={handleNextPagination} disabled={page >= totalPage}>
                   Next
-                </Link>
+                </button>
               </li>
             </ul>
           </nav>
         </div>
-      ) : (
-        ""
-      )}
+      ) : ''}
       <Footer />
     </div>
   );
